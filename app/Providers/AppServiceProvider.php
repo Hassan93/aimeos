@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Gate::define('admin', function($user, $class, $roles) {
+        		return app( '\Aimeos\Shop\Base\Support' )->checkGroup( $user->id, $roles );
+        	});
     }
 
     /**
